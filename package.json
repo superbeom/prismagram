@@ -6,10 +6,13 @@
   "author": "superbeom <it.super.beom@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.3",
+    "dotenv": "^7.0.0",
     "graphql-yoga": "^1.17.4"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
     "nodemon": "^1.18.11"
   },
   "scripts": {
