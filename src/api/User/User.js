@@ -2,7 +2,27 @@ import { prisma } from "../../../generated/prisma-client";
 
 export default {
   User: {
+    posts: ({ id }) => prisma.user({ id }).posts(),
+    likes: ({ id }) => prisma.user({ id }).likes(),
+    comments: ({ id }) => prisma.user({ id }).comments(),
+    rooms: ({ id }) => prisma.user({ id }).rooms(),
+    following: ({ id }) => prisma.user({ id }).following(),
+    followers: ({ id }) => prisma.user({ id }).followers(),
+
+    followingCount: ({ id }) =>
+      prisma
+        .usersConnection({ where: { followers_some: { id } } })
+        .aggregate()
+        .count(),
+
+    followersCount: ({ id }) =>
+      prisma
+        .usersConnection({ where: { following_none: { id } } })
+        .aggregate()
+        .count(),
+
     fullName: parent => `${parent.firstName} ${parent.lastName}`,
+
     isFollowing: (parent, _, { request }) => {
       const { id: parentId } = parent;
       const { user } = request;
@@ -25,6 +45,7 @@ export default {
         return false;
       }
     },
+
     isSelf: (parent, _, { request }) => {
       const { id: parentId } = parent;
       const { user } = request;
