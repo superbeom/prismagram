@@ -9,6 +9,12 @@ export default {
     following: ({ id }) => prisma.user({ id }).following(),
     followers: ({ id }) => prisma.user({ id }).followers(),
 
+    postsCount: ({ id }) =>
+      prisma
+        .postsConnection({ where: { user: { id } } })
+        .aggregate()
+        .count(),
+
     followingCount: ({ id }) =>
       prisma
         .usersConnection({ where: { followers_some: { id } } })
